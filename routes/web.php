@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified', 'role:ADMIN'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', AdminDashboardController::class)->name('dashboard');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('posts', PostController::class);
 });
 
 require __DIR__.'/auth.php';
